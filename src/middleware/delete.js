@@ -8,7 +8,7 @@ const deleteFile = (url) => {
     const folder = imageSplited[imageSplited.length - 2];
     const imageToDelete = `${folder}/${nameSplited[0]}`;
 
-    if(imageToDelete !== "DressMeUP/default_bathbi"){
+    if(imageToDelete !== "DressMeUP/default_fy8ldf.png"){
         cloudinary.uploader.destroy(imageToDelete, () => console.log('Deleted image'))
     }
 }

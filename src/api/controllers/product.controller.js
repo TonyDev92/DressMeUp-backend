@@ -26,38 +26,38 @@ const getProductById = async (req, res) => {
 }
 
 //POST
-// const postProduct = async (req, res) => {
-
-//     try {
-
-//         const newProduct = new Product(req.body);
-//         const createProduct = await newProduct.save();
-
-//         newProduct.image = req.file.path;
-
-//         return res.status(200).json(createProduct);
-
-//     } catch (error) {
-//         res.status(500).json(error.message);
-//     }
-// }
-
 const postProduct = async (req, res) => {
-    try {
-        const newProduct = new Product({
-            name: req.body.name,
-            price: req.body.price,
-            description: req.body.description,
-            image: req.file ? req.file.path : null
-        });
 
+    try {
+
+        const newProduct = new Product(req.body);
         const createProduct = await newProduct.save();
 
+        newProduct.image = req.file.path;
+
         return res.status(200).json(createProduct);
+
     } catch (error) {
         res.status(500).json(error.message);
     }
-};
+}
+
+// const postProduct = async (req, res) => {
+//     try {
+//         const newProduct = new Product({
+//             name: req.body.name,
+//             price: req.body.price,
+//             description: req.body.description,
+//             image: req.file ? req.file.path : null
+//         });
+        
+//         const createProduct = await newProduct.save();
+
+//         return res.status(200).json(createProduct);
+//     } catch (error) {
+//         res.status(500).json(error.message);
+//     }
+// };
 
 //PUT
 
