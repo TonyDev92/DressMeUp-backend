@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const { connect } = require('./src/utils/database.js');
 const routerProducts = require('./src/api/routes/product.routes.js');
+const routerUsers = require('./src/api/routes/user.routes.js');
 const cloudinary = require('cloudinary').v2;
 const cors = require('cors');
 
@@ -23,7 +24,11 @@ app.use(cors({
     origin: '*',
     credentials: true
 }))
+
+
+app.use('/users', routerUsers);
 app.use('/products', routerProducts);
+
 
 app.use('*', (req, res) => {
     res.status(404).json('Route not found')
