@@ -4,6 +4,7 @@ const {verifySign} = require('../utils/jwt');
 const isAuth = async (req, res, next) => {
 
     try {
+
         const authorization = req.headers.authorization;
 
         if(!authorization){
@@ -14,7 +15,8 @@ const isAuth = async (req, res, next) => {
             return res.status(401).json({message:'no token provided'})
         }
         let tokenVerified = verifySign(token , process.env.JWT_KEY);
-        if(tokenVerified.id){
+
+        if(!tokenVerified.id){
             return res.status(401).json(tokenVerified);
         }
         const userLogged = await User.findById(tokenVerified.id);
