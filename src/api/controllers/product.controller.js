@@ -42,29 +42,13 @@ const postProduct = async (req, res) => {
     }
 }
 
-// const postProduct = async (req, res) => {
-//     try {
-//         const newProduct = new Product({
-//             name: req.body.name,
-//             price: req.body.price,
-//             description: req.body.description,
-//             image: req.file ? req.file.path : null
-//         });
-        
-//         const createProduct = await newProduct.save();
-
-//         return res.status(200).json(createProduct);
-//     } catch (error) {
-//         res.status(500).json(error.message);
-//     }
-// };
 
 //PUT
 
 const putProduct = async (req, res) => {
 
     try {
-        const { id } = req.params;
+        const { id } = req.params.id;
         const productToUpdate = new Product(req.body);
         productToUpdate._id = id;
 
@@ -72,7 +56,7 @@ const putProduct = async (req, res) => {
             productToUpdate.image = req.file.path;
         }
 
-        const updatedProduct = await Product.findByIdAndUpdate(id, productToUpdate);
+        const updatedProduct = await Product.findByIdAndUpdate(id, productToUpdate).save();
 
         if (updatedProduct.image) {
             deleteFile(updatedProduct.image);

@@ -2,7 +2,7 @@ const User = require('../api/models/user.model');
 
 const validateEmail = (email) => {
 
-    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const regex =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     //EMAIL REGEX
     return regex.test(String(email).toLocaleLowerCase());
 }
