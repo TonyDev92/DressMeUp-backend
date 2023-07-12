@@ -62,17 +62,50 @@ const userRegister = async (req, res) => {
         if(await validateEmailOnUse(newUser.email) > 0 ){
             return res.status(400).json({message: 'This email is already on use'})
         }
-
+        if(newUser.street == ""){
+            return res.status(400).json({message: "Street Required"})
+        }
+        if(newUser.city == ""){
+            return res.status(400).json({message: "City Required"})
+        }
+        if(newUser.postalCode == ""){
+            return res.status(400).json({message: "Postal Code Required"})
+        }
+        if(newUser.name == ""){
+            return res.status(400).json({message: "Name Required"})
+        }
+        if(newUser.province == ""){
+            return res.status(400).json({message: "Province Required"})
+        }
         newUser.password = bcrypt.hashSync(newUser.password, 10);
         const newEmail = await newUser.save();
         const token = generateSign(newEmail._id , newEmail.email);
         console.log(`user: ${newEmail} token: ${token}`);
+
         return res.status(201).json({newEmail, token})
 
     } catch (error) {
         return res.status(500).json(error)
     }
 }
+
+const userUpdated = async(req, res) => {
+
+    try {
+        const {id} = req.params;
+        const userToUpdate = new User(req.body);
+        userToUpdate._id = id;
+
+        const updatedUser = await User.findByIdAndUpdate(id, userToUpdate);
+
+        return !updatedUser ? res.status(404).json({message: "User not Found"}) : res.status(200).json({message: "User updated succesfully"});
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+}
+
 
 const updateCart = async(req, res) => {
     try {
@@ -110,8 +143,8 @@ const removeFromCart = async(req, res) => {
 
         return res.status(200).json(user.products)
     } catch (error) {
-        console.log(error)
         res.status(500).json(error)
+        console.log(error);
     }
 }
 
@@ -127,10 +160,10 @@ const checkSesion = async(req,res) => {
 const deleteAcount = async(req, res) => {
 
     try {
-        const userId = req.user._id;
-        await User.findByIdAndDelete(userId);
+        const {id} = req.params;
+        const userToDelete = await User.findByIdAndDelete(id);
 
-        res.status(200).json({message: "Cuenta eliminada"})
+        return !userToDelete ? res.status(404).json({message: 'Not Found'}) : res.status(200).json({message: 'Account Delete'})
     } catch (error) {
         res.status(500).json(error);
     }
@@ -141,6 +174,7 @@ module.exports = { userLogin,
     checkSesion, 
     updateCart,
     deleteAcount, 
-    removeFromCart
+    removeFromCart,
+    userUpdated
 };
 

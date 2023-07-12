@@ -22,4 +22,5 @@ const validateEmailOnUse = async (email) => {
     return user.length;
 }
 
+
 module.exports = {validateEmail , validateEmailOnUse , validatePassword };
