@@ -81,10 +81,10 @@ const userRegister = async (req, res) => {
         const newEmail = await newUser.save();
         const token = generateSign(newEmail._id , newEmail.email);
         console.log(`user: ${newEmail} token: ${token}`);
-
         return res.status(201).json({newEmail, token})
 
     } catch (error) {
+        console.log(error);
         return res.status(500).json(error)
     }
 }

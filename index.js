@@ -11,6 +11,11 @@ const PORT = process.env.PORT || 5500;
 const app = express();
 connect();
 
+const allowedOrigins = [
+    'https://dressmeup-frontend.web.app',
+    'http://localhost:5173'
+];
+
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_KEY,
@@ -25,13 +30,12 @@ app.use(cors({
     credentials: true
 }))
 
-
 app.use('/users', routerUsers);
 app.use('/products', routerProducts);
 
-
 app.use('*', (req, res) => {
-    res.status(404).json('Route not found')
+    console.log(req);
+    res.status(404).json('Route not found');
 })
 
 app.listen(PORT, () => console.log(`Listening on : Http://localhost:${PORT}`));
