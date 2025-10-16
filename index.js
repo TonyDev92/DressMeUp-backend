@@ -13,7 +13,8 @@ connect();
 
 const allowedOrigins = [
     'https://dressmeup-frontend.web.app',
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'http://localhost:4200/'
 ];
 
 cloudinary.config({
@@ -26,7 +27,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use(cors({
-    origin: '*',
+    // origin: '*',
+    origin: allowedOrigins,
     credentials: true
 }))
 
