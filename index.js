@@ -28,7 +28,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(cors({
     // origin: '*',
-    origin: allowedOrigins,
+    origin: ['http://localhost:4200/','https://dressmeup-frontend.web.app'],
     credentials: true
 }))
 
